@@ -3,11 +3,12 @@ import stage
 import constants
 
 
-def menu_scene():
+def game_scene():
     # This function is the main game scene
 
     # image banks for CircuitPython
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    image_bank_background = stage.Bank.from_bmp16(
+        "space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
 
     # buttons that you want to keep state information on
@@ -26,10 +27,12 @@ def menu_scene():
     # and the size (10x8 tiles of size 16x16)
     background = stage.Grid(image_bank_background, 10, 8)
     ship = stage.Sprite(
-        image_bank_sprites, 5, 75, constants.SCREEN_Y - (2 * constants.SPRITE_SIZE)
+        image_bank_sprites, 5, 75, constants.SCREEN_Y -
+        (2 * constants.SPRITE_SIZE)
     )
-    alien = stage.Sprite(image_bank_sprites, 9, int(constants.SCREEN_X / 2 - constants.SPRITE_SIZE / 2),16)
-        
+    alien = stage.Sprite(image_bank_sprites, 9, int(
+        constants.SCREEN_X / 2 - constants.SPRITE_SIZE / 2), 16)
+
     # create a stage for the background to show up on
     # and set the frame rate to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
@@ -61,7 +64,7 @@ def menu_scene():
         if keys & ugame.K_X != 0:
             pass
         if keys & ugame.K_START != 0:
-            print("Start")
+            pass
         if keys & ugame.K_SELECT != 0:
             print("Select")
         if keys & ugame.K_RIGHT != 0:
@@ -83,13 +86,70 @@ def menu_scene():
         # update game logic
         # redraw sprites
         if a_button == constants.button_state["button_just_pressed"]:
-            
+
             sound.play(pew_sound)
 
         # redraw sprites
 
         game.render_sprites([ship] + [alien])
         game.tick()
+
+
+def menu_scene():
+    # This function is the main game scene
+
+    # image banks for CircuitPython
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+
+        # add text objects
+    text = []
+
+    text1 = stage.Text(width=29, height=12, font=None,
+                    palette=constants.RED_PALETTE, buffer=None)
+    text1.move(20, 10)
+    text1.text("MT Game Studios")
+    text.append(text1)
+
+    text2 = stage.Text(width=29, height=12, font=None,
+                    palette=constants.RED_PALETTE, buffer=None)
+    text2.move(40, 110)
+    text2.text("PRESS START")
+    text.append(text2)
+
+
+
+    # sets the background to image in the image bank
+    # and the size (10x8 tiles of size 16x16)
+    background = stage.Grid(image_bank_background, 10, 8)
+    
+        
+    # create a stage for the background to show up on
+    # and set the frame rate to 60fps
+    game = stage.Stage(ugame.display, constants.FPS)
+    game.layers = text + [background]
+
+    # render the background and initial location of sprite list
+
+    # most likely you will only render blocks
+    game.render_block()
+
+    # repeat forever, game loop
+    while True:
+
+        # get user input
+        keys = ugame.buttons.get_pressed()
+
+    
+        if keys & ugame.K_START != 0:
+            game_scene() 
+
+        # redraw sprites
+
+        game.tick()
+
+
+
+
 
 
 if __name__ == "__main__":
