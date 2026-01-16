@@ -174,7 +174,7 @@ def splash_scene():
 
     # get sound ready
     coin_sound = open("coin.wav", "rb")
-    sound = ugame.audio
+    sound = .audio
     sound.stop()
     sound.mute(False)
     sound.play(coin_sound)
