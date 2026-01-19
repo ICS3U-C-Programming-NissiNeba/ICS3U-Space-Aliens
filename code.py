@@ -96,7 +96,7 @@ def game_scene():
         # Move aliens
         for alien in aliens:
             if alien.x > 0:
-                alien.move(alien.x, alien.y + constants.ALIEN_SPEED)
+                alien.move(alien.x, alien.y + constants.ALIEN_SPEED)y
                 if alien.y > constants.SCREEN_Y:
                     alien.move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
                     show_alien()
